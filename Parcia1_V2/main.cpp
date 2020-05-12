@@ -5,7 +5,7 @@
 using namespace std;
 
 string leer(string file);
-void escribir(string file, string texto);
+void escribir_peli(string file, string genero, string duracion, int sala, int hora, string clasi);
 string char2bin(string texto);
 string codi2(string b, int n);
 
@@ -14,7 +14,7 @@ string directorio = "../Data_base/";// directorio de la base de datos
 int main()
 {
     //variables
-    int u=0, n=4;
+    int u=0, opt=0, n=4;
     string admin_pass;
     string t, b;
     string aux1;
@@ -32,16 +32,41 @@ int main()
         cin >>admin_pass;
         b = char2bin(admin_pass);
         aux1 = codi2(b,n);
-        //escribir_admin(directorio+"sudo",admin_pass);
         t = leer(directorio+"sudo");
         if (t != aux1)
             cout<<"Clave incorrecta"<<endl;
-        else
-            cout<<"Vamos bien"<<endl;
+        else{
+            cout<<"Bienvenido"<<endl;
+            cout<<"Que desea realizar?"<<endl;
+            cout<<"1. Agregar Pelicula"<<endl;
+            cin>>opt;
+         }
+         switch (opt){
+             case 1:{
+                string nombre, gen, dur, clas;
+                int sal=0, h;
 
+                cout<<"Nombre de la pelicula"<<endl;
+                cin>>nombre;
+                cout<<"Genero"<<endl;
+                cin>>gen;
+                cout<<"Duracion"<<endl;
+                cin>>dur;
+                cout<<"Sala de proyeccion"<<endl;
+                cin>>sal;
+                cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
+                cin>>h;
+                cout<<"Clasificacion de la pelicula"<<endl;
+                cin>>clas;
+
+                escribir_peli(directorio+nombre,gen,dur,sal,h,clas);
+
+             }
+         }
+    }
     //cout << "Hello World!" << endl;
     return 0;
-    }
+
 }
 
 
@@ -66,7 +91,7 @@ string leer(string file){
     return texto;
 }
 
-void escribir(string file,string texto){
+void escribir_peli(string file, string genero, string duracion, int sala, int hora, string clasi){
     ofstream archivo;
     archivo.open(file);
 
@@ -74,7 +99,11 @@ void escribir(string file,string texto){
         cout<<"Error abriendo el archivo"<<endl;
         exit(1);
     }else{
-        archivo<<texto;
+        archivo<<genero<<endl;
+        archivo<<duracion<<endl;
+        archivo<<sala<<endl;
+        archivo<<hora<<endl;
+        archivo<<clasi<<endl;
         archivo.close();
     }
 }

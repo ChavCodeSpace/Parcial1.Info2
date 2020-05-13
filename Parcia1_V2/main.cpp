@@ -1,4 +1,5 @@
 #include "admin.h"
+#include "client.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,7 +7,7 @@
 using namespace std;
 
 string leer(string file);
-void escribir_peli(string file, string genero, string duracion, int sala, int hora, string clasi);
+void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi);
 string char2bin(string texto);
 string codi2(string b, int n);
 
@@ -66,11 +67,19 @@ int main()
                 cout<<"Cuantos asientos disponibles"<<endl;
                 cin>>sillas;
                 admin.setAsientos(sillas);
+                cout<<"Precio de la boleta"<<endl;
 
-                escribir_peli(directorio+nombre,gen,dur,sala,h,clas);
+                escribir_peli(directorio+"cartelera",nombre,gen,dur,sala,h,clas);
+
 
              }
          }
+    }
+    else if(u==2){
+        cout<<"Bienvenido"<<endl;
+        cout<<"Que desea hacer?"<<endl;
+        cout<<"1. Ver cartelera"<<endl;
+        cout<<"2. Comprar boleta"<<endl;
     }
     //cout << "Hello World!" << endl;
     return 0;
@@ -99,19 +108,15 @@ string leer(string file){
     return texto;
 }
 
-void escribir_peli(string file, string genero, string duracion, int sala, int hora, string clasi){
+void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi){
     ofstream archivo;
-    archivo.open(file);
+    archivo.open(file, ios::app);
 
     if(!archivo.is_open()){
         cout<<"Error abriendo el archivo"<<endl;
         exit(1);
     }else{
-        archivo<<genero<<endl;
-        archivo<<duracion<<endl;
-        archivo<<sala<<endl;
-        archivo<<hora<<endl;
-        archivo<<clasi<<endl;
+        archivo<<nombre<<"/"<<genero<<"/"<<duracion<<"/"<<sala<<"/"<<hora<<"/"<<clasi<<endl;
         archivo.close();
     }
 }

@@ -1,7 +1,9 @@
 #ifndef ADMIN_H
 #define ADMIN_H
 #include <iostream>
+#include <vector>
 #include <array>
+#include <unordered_map>
 
 using namespace std;
 
@@ -20,6 +22,9 @@ public:
     void setSala(int value);
     int getAsientos() const;
     void setAsientos(int value);
+    void setPrecio(float);
+    void promocion();
+    void llenar_cartelera();
 
 
 };

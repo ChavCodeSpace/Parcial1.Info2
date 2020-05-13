@@ -1,3 +1,4 @@
+#include "admin.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -19,15 +20,18 @@ int main()
     string t, b;
     string aux1;
 
-
+    Admin admin;//Objeto administrador
 
     cout<<"Bienvenido"<<endl;
-    cout<<"Tipo de Usuario:"<<endl;
-    cout<<"1. Admin User"<<endl;
-    cout<<"2. Normal User"<<endl;
+    cout<<"Eres:"<<endl;
+    cout<<"1. Administrador"<<endl;
+    cout<<"2. Cliente"<<endl;
     cout<<"3. Salir"<<endl;
     cin>>u;
-    if (u==1){//Parte del administrador: Ingreso de datos de usuario
+
+    if (u==1){//Parte del administrador
+
+
         cout <<"Ingrese password"<<endl;
         cin >>admin_pass;
         b = char2bin(admin_pass);
@@ -44,22 +48,26 @@ int main()
          switch (opt){
              case 1:{
                 string nombre, gen, dur, clas;
-                int sal=0, h;
+                int sala=0, h, sillas;
 
                 cout<<"Nombre de la pelicula"<<endl;
-                cin>>nombre;
+                cin>>nombre;                
                 cout<<"Genero"<<endl;
-                cin>>gen;
-                cout<<"Duracion"<<endl;
-                cin>>dur;
+                cin>>gen;                
+                cout<<"Duracion(min)"<<endl;
+                cin>>dur;                
                 cout<<"Sala de proyeccion"<<endl;
-                cin>>sal;
+                cin>>sala;
+                admin.setSala(sala);
                 cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
                 cin>>h;
                 cout<<"Clasificacion de la pelicula"<<endl;
                 cin>>clas;
+                cout<<"Cuantos asientos disponibles"<<endl;
+                cin>>sillas;
+                admin.setAsientos(sillas);
 
-                escribir_peli(directorio+nombre,gen,dur,sal,h,clas);
+                escribir_peli(directorio+nombre,gen,dur,sala,h,clas);
 
              }
          }

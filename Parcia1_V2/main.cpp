@@ -7,6 +7,7 @@
 using namespace std;
 
 string leer(string file);
+void imprimir(string file);
 void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi);
 string char2bin(string texto);
 string codi2(string b, int n);
@@ -16,7 +17,7 @@ string directorio = "../Data_base/";// directorio de la base de datos
 int main()
 {
     //variables
-    int u=0, opt=0, n=4;
+    int u=0, opt=0, n=4, opt2=0;
     string admin_pass;
     string t, b;
     string aux1;
@@ -76,10 +77,17 @@ int main()
          }
     }
     else if(u==2){
+
         cout<<"Bienvenido"<<endl;
         cout<<"Que desea hacer?"<<endl;
         cout<<"1. Ver cartelera"<<endl;
         cout<<"2. Comprar boleta"<<endl;
+        cin>>opt2;
+        if (opt2 == 1){
+             imprimir(directorio+"cartelera");
+
+
+        }
     }
     //cout << "Hello World!" << endl;
     return 0;
@@ -108,6 +116,44 @@ string leer(string file){
     return texto;
 }
 
+void imprimir(string file){
+    ifstream archivo;
+    string aux, aux2,aux3,aux4,aux5,aux6;
+    archivo.open(file);
+    if(!archivo.is_open()){
+        cout<<"Error abriendo el archivo"<<endl;
+        exit(1);
+    }else{
+        while(!archivo.eof()){
+            for(string line; getline(archivo, line);){
+                for (unsigned int i = 0; i<line.find("/");++i){//hasta que encuentra el primer /
+                    aux += line.at(i);
+                }
+                for (unsigned int i = line.find("/")+1; i<line.find(":");++i){//del / a los :
+                    aux2 += line.at(i);
+                }
+                for (unsigned int i = line.find(":")+1; i<line.find(",");++i){//e los : a la ,
+                    aux3 += line.at(i);
+                }
+                for (unsigned int i = line.find(",")+1; i<line.find(";");++i){//de la , a el ;
+                    aux4 += line.at(i);
+                }
+                for (unsigned int i = line.find(";")+1; i<line.find(".");++i){//del ; al .
+                    aux5 += line.at(i);
+                }
+                for (unsigned int i = line.find(".")+1; i<line.length();++i){//del . al final
+                    aux6 += line.at(i);
+                }
+                cout<<aux<<"|"<<aux2<<"|"<<aux3<<"|"<<aux4<<"|"<<aux5<<"|"<<aux6<<endl;
+                aux="";aux2="";aux3="";aux4="";aux5="";aux6="";//se resetean las variables auxiliares para la siguiente linea de texto
+                //cout<<endl;
+            }
+        }
+        cout<<endl;
+        archivo.close();
+    }
+}
+
 void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi){
     ofstream archivo;
     archivo.open(file, ios::app);
@@ -116,7 +162,7 @@ void escribir_peli(string file,string nombre, string genero, string duracion, in
         cout<<"Error abriendo el archivo"<<endl;
         exit(1);
     }else{
-        archivo<<nombre<<"/"<<genero<<"/"<<duracion<<"/"<<sala<<"/"<<hora<<"/"<<clasi<<endl;
+        archivo<<nombre<<"/"<<genero<<":"<<duracion<<","<<sala<<";"<<hora<<"."<<clasi<<endl;
         archivo.close();
     }
 }

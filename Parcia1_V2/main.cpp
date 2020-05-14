@@ -1,5 +1,4 @@
 #include "admin.h"
-#include "client.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -45,6 +44,7 @@ int main()
             cout<<"Bienvenido"<<endl;
             cout<<"Que desea realizar?"<<endl;
             cout<<"1. Agregar Pelicula"<<endl;
+            cout<<"2. Generar Reporte de Ventas"<<endl;
             cin>>opt;
          }
          switch (opt){
@@ -60,19 +60,16 @@ int main()
                 cin>>dur;                
                 cout<<"Sala de proyeccion"<<endl;
                 cin>>sala;
-                admin.setSala(sala);
                 cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
                 cin>>h;
                 cout<<"Clasificacion de la pelicula"<<endl;
                 cin>>clas;
                 cout<<"Cuantos asientos disponibles"<<endl;
                 cin>>sillas;
-                admin.setAsientos(sillas);
                 cout<<"Precio de la boleta"<<endl;
 
                 escribir_peli(directorio+"cartelera",nombre,gen,dur,sala,h,clas);
-
-
+                break;
              }
          }
     }
@@ -84,8 +81,31 @@ int main()
         cout<<"2. Comprar boleta"<<endl;
         cin>>opt2;
         if (opt2 == 1){
-             imprimir(directorio+"cartelera");
+            imprimir(directorio+"cartelera");
+        }
+        else if (opt2==2){
+            int aux_sala=0;
+            float cobro=0, vueltos=0;
 
+            imprimir(directorio+"cartelera");
+            cout<<"Sala 1: General 2D 7900"<<endl;
+            cout<<"Sala 2: General 3D 10800"<<endl;
+            cout<<"Sala 3: VibroSound 2D 9900"<<endl;
+            cout<<"Sala 4: Vibrosound 3D 11900"<<endl;
+            cout<<"Ingrese la sala de la pelicula que desea ver"<<endl;
+            cin>>aux_sala;
+            admin.setSala(aux_sala);
+            admin.precio(aux_sala);
+            cout<<"El precio de la boleta es: "<<admin.getPrecio_boletas()<<endl;
+            cout<<"Ingrese el dinero"<<endl;
+            cin>>cobro;
+            if (cobro < admin.getPrecio_boletas()){
+                cout<<"Dinero Insuficiente"<<endl;
+            }else{
+                float temp=0;
+                temp = cobro - admin.getPrecio_boletas();
+                cout<<"Sobrante: "<<temp<<endl;
+            }
 
         }
     }
@@ -209,3 +229,4 @@ string char2bin(string texto){
     }
     return binario;
 }
+

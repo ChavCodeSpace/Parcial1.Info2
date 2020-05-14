@@ -10,23 +10,18 @@ using namespace std;
 class Admin
 {
 private:
-    //sala de cine
-    array<int, 7> Salas;//7 Salas de cine
     float precio_boletas;
-    int sala, asientos;
+    int sala;
 
 public:
     Admin();
     //get and set members
     int getSala() const;
     void setSala(int value);
-    int getAsientos() const;
-    void setAsientos(int value);
-    void setPrecio(float);
+    float getPrecio_boletas() const;
+    void setPrecio_boletas(float value);
+    void precio(int s);
     void promocion();
-    void llenar_cartelera();
-
-
 };
 
 #endif // ADMIN_H

@@ -12,7 +12,7 @@ class Admin
 private:
     float precio_boletas;
     int sala;
-    unordered_map<char, array<int, 10>> sala_cine; //{sala, asientos disponibles};
+    unordered_map<int, unordered_map<char, vector<int>>> sala_cine;
 
 public:
     Admin();
@@ -21,10 +21,12 @@ public:
     void setSala(int value);
     float getPrecio_boletas() const;
     void setPrecio_boletas(float value);
-    void precio(int s);
-    void promocion();
-    void agregar_sala(char fila, int puesto);
-    void imprimir_sala();
+    //Metodos
+    void precio(int s);//metodo para poner el precio del boleto dependiendo de la sala
+    void promocion();//metodo para dar promociones dependiendo de los asientos disponibles
+    void llenar_sala();//metodo para llenar los asientos en la sala de cine
+    void imprimir_sala();//metodo para imprimir la sala de cine
+
 };
 
 #endif // ADMIN_H

@@ -13,24 +13,43 @@ void Admin::setSala(int value)
 void Admin::promocion()
 {
 
-//    for(int i=0; i<7;i++){
-//       if (Salas.at(i)>50){
-//           setPrecio();
 
-//       }
-    //    }
+
 }
 
-void Admin::agregar_sala(char fila, int puesto)
+void Admin::llenar_sala()
 {
-    sala_cine.insert(make_pair(fila, puesto));
+    typedef unordered_map<char, vector<int>> mapa;
+    typedef vector<int> vector;
+    mapa aux_map;
+    vector aux_vector;
+    int cont = 1;
+    char temp = 'A';
+    for (unsigned int i = 0; i<7;i++){
+        aux_vector[i]=1;
+    }
+    while(cont <5){
+        for (char j=temp;j<=74;j++){
+            aux_map[j]=aux_vector;
+        }
+        sala_cine.insert(make_pair(cont, aux_map));
+        cont++;
+    }
 }
 
 void Admin::imprimir_sala()
 {
+    int aux=0;
     cout<<endl;
     for (auto it = sala_cine.begin(); it != sala_cine.end();++it){
-        cout<<"La sala: "<<it->first<<" tiene "<<it->second<<" asientos disponibles."<<endl;
+        //int auxflag = it->first;
+        cout<<"Sala "<<it->first<<endl;
+        for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
+            for (int i =0; i<7;i++){
+                aux = jt->second[i];
+                cout<<"fila "<<jt->first<<" asiento "<<aux;
+            }
+        }
     }
 }
 

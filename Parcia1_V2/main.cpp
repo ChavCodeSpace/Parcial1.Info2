@@ -8,6 +8,7 @@ using namespace std;
 string leer(string file);
 void imprimir(string file);
 void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi);
+void escribir_estreno(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi, string fecha);
 string char2bin(string texto);
 string codi2(string b, int n);
 
@@ -20,93 +21,139 @@ int main()
     string admin_pass;
     string t, b;
     string aux1;
+    bool flag1=true;
 
     Admin admin;//Objeto administrador
-
-    cout<<"Bienvenido"<<endl;
-    cout<<"Eres:"<<endl;
-    cout<<"1. Administrador"<<endl;
-    cout<<"2. Cliente"<<endl;
-    cout<<"3. Salir"<<endl;
-    cin>>u;
-
-    if (u==1){//Parte del administrador
-
-
-        cout <<"Ingrese password"<<endl;
-        cin >>admin_pass;
-        b = char2bin(admin_pass);
-        aux1 = codi2(b,n);
-        t = leer(directorio+"sudo");
-        if (t != aux1)
-            cout<<"Clave incorrecta"<<endl;
-        else{
-            cout<<"Bienvenido"<<endl;
-            cout<<"Que desea realizar?"<<endl;
-            cout<<"1. Agregar Pelicula"<<endl;
-            cout<<"2. Generar Reporte de Ventas"<<endl;
-            cin>>opt;
-         }
-         switch (opt){
-             case 1:{
-                string nombre, gen, dur, clas;
-                int sala=0, h, sillas;
-
-                cout<<"Nombre de la pelicula"<<endl;
-                cin>>nombre;                
-                cout<<"Genero"<<endl;
-                cin>>gen;                
-                cout<<"Duracion(min)"<<endl;
-                cin>>dur;                
-                cout<<"Sala de proyeccion"<<endl;
-                cin>>sala;
-                cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
-                cin>>h;
-                cout<<"Clasificacion de la pelicula"<<endl;
-                cin>>clas;
-                cout<<"Cuantos asientos disponibles"<<endl;
-                cin>>sillas;
-                cout<<"Precio de la boleta"<<endl;
-
-                escribir_peli(directorio+"cartelera",nombre,gen,dur,sala,h,clas);
-                break;
-             }
-         }
-    }
-    else if(u==2){
-
+    while (flag1){
         cout<<"Bienvenido"<<endl;
-        cout<<"Que desea hacer?"<<endl;
-        cout<<"1. Ver cartelera"<<endl;
-        cout<<"2. Comprar boleta"<<endl;
-        cin>>opt2;
-        if (opt2 == 1){
-            imprimir(directorio+"cartelera");
+        cout<<"Eres:"<<endl;
+        cout<<"1. Administrador"<<endl;
+        cout<<"2. Cliente"<<endl;
+        cout<<"3. Salir"<<endl;
+        cin>>u;
+
+        if (u==1){//Parte del administrador
+
+            cout <<"Ingrese password"<<endl;
+            cin >>admin_pass;
+            b = char2bin(admin_pass);
+            aux1 = codi2(b,n);
+            t = leer(directorio+"sudo");
+            if (t != aux1)
+                cout<<"Clave incorrecta"<<endl;
+            else{
+                cout<<"Bienvenido"<<endl;
+                cout<<"Que desea realizar?"<<endl;
+                cout<<"1. Agregar Pelicula"<<endl;
+                cout<<"2. Agregar proximo estreno"<<endl;
+                cout<<"3. Generar Reporte de Ventas"<<endl;
+                cin>>opt;
+             }
+             switch (opt){
+             case 1:{
+                 string nombre, gen, dur, clas;
+                 int sala=0, h, sillas;
+
+                 cout<<"Nombre de la pelicula"<<endl;
+                 getline(cin, nombre);
+                 cout<<"Genero"<<endl;
+                 getline(cin, gen);
+                 cout<<"Duracion(min)"<<endl;
+                 getline(cin, dur);
+                 cout<<"Sala de proyeccion"<<endl;
+                 cin>>sala;
+                 if (sala > 4){
+                     cout<<"solo hay 4 salas"<<endl;
+                     break;
+                 }
+                 cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
+                 cin>>h;
+                 cout<<"Clasificacion de la pelicula"<<endl;
+                 cin>>clas;
+                 cout<<"Cuantos hay disponibles para la venta"<<endl;
+                 cin>>sillas;
+
+                 escribir_peli(directorio+"cartelera",nombre,gen,dur,sala,h,clas);
+                 admin.setSala(sala);
+                 admin.agregar_sala(sala, sillas);
+                 break;
+             }
+             case 2:{
+                 string nombre_es, gen_es, dur_es, clas_es;
+                 int sala=0, h;
+                 string date="";
+
+                 cout<<"Nombre de la pelicula"<<endl;
+                 getline(cin, nombre_es);
+                 cout<<"Genero"<<endl;
+                 getline(cin, gen_es);
+                 cout<<"Duracion(min)"<<endl;
+                 getline(cin, dur_es);
+                 cout<<"Sala de proyeccion"<<endl;
+                 cin>>sala;
+                 if (sala > 4){
+                     cout<<"solo hay 4 salas"<<endl;
+                     break;
+                 }
+                 cout<<"Hora de proyeccion (24h sin puntos)"<<endl;
+                 cin>>h;
+                 cout<<"Clasificacion de la pelicula"<<endl;
+                 cin>>clas_es;
+                 cout<<"Fecha de estreno"<<endl;
+                 cin>>date;
+
+                 escribir_estreno(directorio+"estrenos",nombre_es,gen_es,dur_es,sala,h,clas_es,date);
+
+             }
+             }
         }
-        else if (opt2==2){
-            int aux_sala=0;
-            float cobro=0, vueltos=0;
+        else if(u==2){
+            bool flag2=true;
+            while(flag2){
+                cout<<"Bienvenido"<<endl;
+                cout<<"Que desea hacer?"<<endl;
+                cout<<"1. Ver cartelera"<<endl;
+                cout<<"2. Comprar boleta"<<endl;
+                cout<<"3. Ver Proximas Peliculas"<<endl;
+                cout<<"4. Salir"<<endl;
+                cin>>opt2;
+                if (opt2 == 1){
+                    imprimir(directorio+"cartelera");
+                }
+                else if (opt2==2){
+                    int aux_sala=0;
+                    float cobro=0;
 
-            imprimir(directorio+"cartelera");
-            cout<<"Sala 1: General 2D 7900"<<endl;
-            cout<<"Sala 2: General 3D 10800"<<endl;
-            cout<<"Sala 3: VibroSound 2D 9900"<<endl;
-            cout<<"Sala 4: Vibrosound 3D 11900"<<endl;
-            cout<<"Ingrese la sala de la pelicula que desea ver"<<endl;
-            cin>>aux_sala;
-            admin.setSala(aux_sala);
-            admin.precio(aux_sala);
-            cout<<"El precio de la boleta es: "<<admin.getPrecio_boletas()<<endl;
-            cout<<"Ingrese el dinero"<<endl;
-            cin>>cobro;
-            if (cobro < admin.getPrecio_boletas()){
-                cout<<"Dinero Insuficiente"<<endl;
-            }else{
-                float temp=0;
-                temp = cobro - admin.getPrecio_boletas();
-                cout<<"Sobrante: "<<temp<<endl;
+                    imprimir(directorio+"cartelera");
+                    cout<<"Sala 1: General 2D 7900"<<endl;
+                    cout<<"Sala 2: General 3D 10800"<<endl;
+                    cout<<"Sala 3: VibroSound 2D 9900"<<endl;
+                    cout<<"Sala 4: Vibrosound 3D 11900"<<endl;
+                    cout<<"Ingrese la sala de la pelicula que desea ver"<<endl;
+                    cin>>aux_sala;
+                    admin.precio(aux_sala);
+                    admin.imprimir_sala();
+                    cout<<"El precio de la boleta es: "<<admin.getPrecio_boletas()<<endl;
+                    cout<<"Ingrese el dinero"<<endl;
+                    cin>>cobro;
+                    if (cobro < admin.getPrecio_boletas()){
+                        cout<<"Dinero Insuficiente"<<endl;
+                    }else{
+                        float temp=0;
+                        temp = cobro - admin.getPrecio_boletas();
+                        cout<<"Sobrante: "<<temp<<endl;
+                    }
+
+                }else if(opt2==3){
+                    imprimir(directorio+"estrenos");
+                }else{
+                    cout<<"Hasta luego"<<endl;
+                    flag2=false;
+                }
             }
-
+        }else{
+            cout<<"Hasta luego"<<endl;
+            flag1=false;
         }
     }
     //cout << "Hello World!" << endl;
@@ -183,6 +230,19 @@ void escribir_peli(string file,string nombre, string genero, string duracion, in
         exit(1);
     }else{
         archivo<<nombre<<"/"<<genero<<":"<<duracion<<","<<sala<<";"<<hora<<"."<<clasi<<endl;
+        archivo.close();
+    }
+}
+
+void escribir_estreno(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi, string fecha){
+    ofstream archivo;
+    archivo.open(file, ios::app);
+
+    if(!archivo.is_open()){
+        cout<<"Error abriendo el archivo"<<endl;
+        exit(1);
+    }else{
+        archivo<<nombre<<"/"<<genero<<":"<<duracion<<","<<sala<<";"<<hora<<"."<<clasi<<"-"<<fecha<<endl;
         archivo.close();
     }
 }

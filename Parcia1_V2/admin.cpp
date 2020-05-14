@@ -18,7 +18,20 @@ void Admin::promocion()
 //           setPrecio();
 
 //       }
-//    }
+    //    }
+}
+
+void Admin::agregar_sala(char fila, int puesto)
+{
+    sala_cine.insert(make_pair(fila, puesto));
+}
+
+void Admin::imprimir_sala()
+{
+    cout<<endl;
+    for (auto it = sala_cine.begin(); it != sala_cine.end();++it){
+        cout<<"La sala: "<<it->first<<" tiene "<<it->second<<" asientos disponibles."<<endl;
+    }
 }
 
 

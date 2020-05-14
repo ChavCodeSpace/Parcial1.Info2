@@ -12,6 +12,7 @@ class Admin
 private:
     float precio_boletas;
     int sala;
+    unordered_map<char, array<int, 10>> sala_cine; //{sala, asientos disponibles};
 
 public:
     Admin();
@@ -22,6 +23,8 @@ public:
     void setPrecio_boletas(float value);
     void precio(int s);
     void promocion();
+    void agregar_sala(char fila, int puesto);
+    void imprimir_sala();
 };
 
 #endif // ADMIN_H

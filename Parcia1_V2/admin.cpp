@@ -73,13 +73,21 @@ void Admin::print_sala(int s)
     }
 }
 
-void Admin::setPuesto(string puesto)
+void Admin::setPuesto(int s, char fila, int silla)
 {
+    //recorre todo el mapa y cuando entra a la sala escogida, ahi busca la fila ingresada y pone un uno en la posicion escogida por el cliente
     for(auto it = sala_cine.begin(); it != sala_cine.end();++it){
-        for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
-
+        if (s == it->first){
+            for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
+               if (fila == jt->first){
+                    for (auto j : jt->second){
+                        if (j==silla){
+                            jt->second[j]=1;
+                        }
+                    }
+               }
+            }
         }
-
     }
 }
 

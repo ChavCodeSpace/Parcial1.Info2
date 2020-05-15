@@ -29,7 +29,7 @@ public:
     void llenar_sala();//metodo para llenar los asientos en la sala de cine
     void imprimir_salas();//metodo para imprimir las salas de cine
     void print_sala(int s);//metodo para imprimir la sala escogida por el usuario
-    void setPuesto(string puesto);
+    void setPuesto(int s, char fila, int silla);
 
 };
 

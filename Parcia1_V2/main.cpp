@@ -14,7 +14,7 @@ void imprimir(string file);
 void imprimir_reporte(string file);
 void escribir_peli(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi);
 void escribir_estreno(string file,string nombre, string genero, string duracion, int sala, int hora, string clasi, string fecha);
-void escribir_factura(string file,int s, float cash, string silla);
+void escribir_factura(string file,int s, float cash, char silla, int puesto);
 string char2bin(string texto);
 string codi2(string b, int n);
 
@@ -28,6 +28,7 @@ int main()
     string t, b;
     string aux1;
     bool flag1=true;//control para el ciclo while
+    //int n_clientes=0; //variable para los descuentos por cliente
 
     Admin admin;//Objeto administrador
     admin.llenar_sala();//crea el cine
@@ -68,7 +69,7 @@ int main()
 
                  cin.ignore();//Ignora el Enter que queda en el buffer despues de escoger la opcion, ya que presentaba problemas dejando en blanco el primero string
                  cout<<"Nombre de la pelicula"<<endl;
-                 getline(cin, nombre);
+                 getline(cin, nombre);//Se usa getline para capturar estos strings para que se guarde hasta que el usuario presione enter
                  //cin.ignore(numeric_limits<streamsize>::max(),'\n');
                  cout<<"Genero"<<endl;
                  getline(cin, gen);
@@ -154,7 +155,8 @@ int main()
                     //variables auxiliares para la venta
                     int aux_sala=0;
                     float cobro=0;
-                    string asiento;
+                    char asiento;
+                    int asiento2;
 
                     //imprime la cartelera aqui tambien para que el usuario tenga la inforamcion disponible para la compra
                     imprimir(directorio+"cartelera");
@@ -167,9 +169,12 @@ int main()
                     cout<<"Ingrese la sala de la pelicula que desea ver"<<endl;
                     cin>>aux_sala;
                     admin.print_sala(aux_sala);//muestra la sala escogida por el usuario
-                    cout<<"Ingrese el asiento"<<endl;
+                    cout<<"Escoja un asiento disponible"<<endl;
+                    cout<<"Ingrese la fila (A-J)"<<endl;
                     cin>>asiento;
-                    admin.setPuesto(asiento);
+                    cout<<"Ingrese el numero del asiento que desea (1-7)"<<endl;
+                    cin>>asiento2;
+                    admin.setPuesto(aux_sala,asiento, asiento2);
                     admin.precio(aux_sala);//dependiendo de la sala pone el precio a la boleta
                     //admin.imprimir_sala();
                     cout<<"El precio de la boleta es: "<<admin.getPrecio_boletas()<<endl;
@@ -182,9 +187,10 @@ int main()
                         float temp=0;
                         temp = cobro - admin.getPrecio_boletas();
                         cout<<"Sobrante: "<<temp<<endl;
+                        //n_clientes++;
                     }
                     //escribe la venta generada en el reporte del dia
-                    escribir_factura(directorio+"reporte",aux_sala,admin.getPrecio_boletas(), asiento);
+                    escribir_factura(directorio+"reporte",aux_sala,admin.getPrecio_boletas(), asiento, asiento2);
 
                 }else if(opt2==3){//estrenos
                     imprimir(directorio+"estrenos");
@@ -295,7 +301,7 @@ void escribir_estreno(string file,string nombre, string genero, string duracion,
 }
 
 //funcion para generar el reporte de ventas
-void escribir_factura(string file, int s, float cash, string silla){
+void escribir_factura(string file, int s, float cash, char silla, int puesto){
     ofstream archivo;
     archivo.open(file, ios::app);
 
@@ -303,7 +309,7 @@ void escribir_factura(string file, int s, float cash, string silla){
         cout<<"Error abriendo el archivo"<<endl;
         exit(1);
     }else{
-        archivo<<"Sala: "<<s<<" venta: "<<cash<<" asiento "<<silla<<endl;
+        archivo<<"Sala: "<<s<<" venta: "<<cash<<" asiento "<<silla<<puesto<<endl;
         archivo.close();
     }
 

@@ -14,11 +14,12 @@ void Admin::promocion()
 {
 
 
-
 }
 
 void Admin::llenar_sala()
 {
+    //Se definen dos variables mapa y vector para usarlas como auxiliares para llenar el mapa grande
+    //Luego del llenado de las variables auxiliares se insertan en el mapa principal
     typedef unordered_map<char, vector<int>> mapa;
     typedef vector<int> vector;
     mapa aux_map;
@@ -26,7 +27,7 @@ void Admin::llenar_sala()
     int cont = 1;
     char temp = 'A';
     for (unsigned int i = 0; i<7;i++){
-        aux_vector[i]=1;
+        aux_vector.push_back(0);
     }
     while(cont <5){
         for (char j=temp;j<=74;j++){
@@ -37,22 +38,50 @@ void Admin::llenar_sala()
     }
 }
 
-void Admin::imprimir_sala()
+void Admin::imprimir_salas()
 {
-    int aux=0;
+    //La idea es recorrer todo el mapa con el uso de iteradores para sacar los datos e imprimirlos en pantalla
     cout<<endl;
     for (auto it = sala_cine.begin(); it != sala_cine.end();++it){
         //int auxflag = it->first;
-        cout<<"Sala "<<it->first<<endl;
+        cout<<"Sala "<<it->first<<endl;//imprime la primera clave, que es la sala
         for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
-            for (int i =0; i<7;i++){
-                aux = jt->second[i];
-                cout<<"fila "<<jt->first<<" asiento "<<aux;
+            cout <<jt->first<<" ";//imprime la clave del segundo mapa que es la fila
+            for(auto j : jt->second){
+                cout << jt->second[j];//imprime los asientos
             }
+            cout<<endl;
+        }
+        cout<<endl;
+    }
+}
+
+void Admin::print_sala(int s)
+{
+    for(auto it = sala_cine.begin(); it != sala_cine.end();++it){
+        if (s == it->first){
+            cout<<"Sala "<<it->first<<endl;//imprime la primera clave, que es la sala
+            for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
+                cout <<jt->first<<" ";
+                for(auto j : jt->second){
+                    cout << jt->second[j];
+                }
+                cout<<endl;
+            }
+            cout<<endl;
         }
     }
 }
 
+void Admin::setPuesto(string puesto)
+{
+    for(auto it = sala_cine.begin(); it != sala_cine.end();++it){
+        for (auto jt = (begin(it->second)); jt != end(it->second); ++jt){
+
+        }
+
+    }
+}
 
 
 float Admin::getPrecio_boletas() const

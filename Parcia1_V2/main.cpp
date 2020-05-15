@@ -30,8 +30,8 @@ int main()
     bool flag1=true;//control para el ciclo while
 
     Admin admin;//Objeto administrador
-    //admin.llenar_sala();//crea el cine
-    //admin.imprimir_sala();//mostrar sala
+    admin.llenar_sala();//crea el cine
+    //admin.imprimir_salas();//mostrar sala
 
     while (flag1){
         cout<<"Bienvenido"<<endl;
@@ -166,8 +166,10 @@ int main()
                     cout<<endl;
                     cout<<"Ingrese la sala de la pelicula que desea ver"<<endl;
                     cin>>aux_sala;
+                    admin.print_sala(aux_sala);//muestra la sala escogida por el usuario
                     cout<<"Ingrese el asiento"<<endl;
                     cin>>asiento;
+                    admin.setPuesto(asiento);
                     admin.precio(aux_sala);//dependiendo de la sala pone el precio a la boleta
                     //admin.imprimir_sala();
                     cout<<"El precio de la boleta es: "<<admin.getPrecio_boletas()<<endl;
